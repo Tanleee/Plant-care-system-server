@@ -3,9 +3,7 @@ const dotenv = require('dotenv');
 dotenv.config({ path: './../../config.env' });
 const fs = require('fs');
 
-const Tour = require('./../../models/tourModel');
 const User = require('./../../models/userModel');
-const Review = require('./../../models/reviewModel');
 
 const DB = process.env.DATABASE.replace(
   '<PASSWORD>',
@@ -27,9 +25,7 @@ const review = JSON.parse(
 
 const importData = async () => {
   try {
-    await Tour.create(tours, { validateBeforeSave: false });
     await User.create(user, { validateBeforeSave: false });
-    await Review.create(review, { validateBeforeSave: false });
 
     console.log('Data sucessfully loaded!');
   } catch (err) {
@@ -41,9 +37,7 @@ const importData = async () => {
 // Delete all data from database
 const deleteData = async () => {
   try {
-    await Tour.deleteMany({});
     await User.deleteMany({});
-    await Review.deleteMany({});
 
     console.log('Data sucessfully deleted!');
   } catch (err) {

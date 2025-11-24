@@ -1,0 +1,38 @@
+[
+  {
+    "name": "Smart Plant Monitor v1",
+    "location": {
+      "description": "Living room - near window",
+      "type": "Point",
+      "coordinates": [108.2022, 16.0544]
+    },
+    "isOnline": true,
+    "lastSeen": "2024-01-15T15:30:00.000Z",
+    "createdAt": "2024-01-01T10:00:00.000Z",
+    "userId": "507f1f77bcf86cd799439011"
+  },
+  {
+    "name": "Garden Sensor Unit",
+    "location": {
+      "description": "Backyard garden",
+      "type": "Point",
+      "coordinates": [108.2025, 16.0547]
+    },
+    "isOnline": false,
+    "lastSeen": "2024-01-14T22:15:00.000Z",
+    "createdAt": "2024-01-05T14:30:00.000Z",
+    "userId": "507f1f77bcf86cd799439011"
+  },
+  {
+    "name": "Balcony Plant Monitor",
+    "location": {
+      "description": "2nd floor balcony",
+      "type": "Point",
+      "coordinates": [108.202, 16.0542]
+    },
+    "isOnline": true,
+    "lastSeen": "2024-01-15T15:28:00.000Z",
+    "createdAt": "2024-01-10T08:00:00.000Z",
+    "userId": "507f1f77bcf86cd799439011"
+  }
+]

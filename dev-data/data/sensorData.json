@@ -1,0 +1,23 @@
+[
+  {
+    "temperature": 26.5,
+    "humidity": 65.3,
+    "soilMoisture": 45.2,
+    "light": 850.5,
+    "timestamp": "2024-01-15T15:00:00.000Z"
+  },
+  {
+    "temperature": 27.2,
+    "humidity": 67.5,
+    "soilMoisture": 44.2,
+    "light": 1050.7,
+    "timestamp": "2024-01-15T15:10:00.000Z"
+  },
+  {
+    "temperature": 27.8,
+    "humidity": 69.0,
+    "soilMoisture": 43.5,
+    "light": 1220.8,
+    "timestamp": "2024-01-15T15:20:00.000Z"
+  }
+]
