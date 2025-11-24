@@ -1,8 +1,8 @@
 const { GoogleGenAI } = require('@google/genai');
 const SensorData = require('../models/sensorDataModel');
-const DeviceControl = require('../models/deviceControlMode');
+const DeviceControl = require('./../models/deviceControlModel');
 const ControlLog = require('../models/controlLogModel');
-const SensorDataArchive = require('../models/sensorDataArchiveModel');
+// const SensorDataArchive = require('../models/sensorDataArchiveModel');
 
 // Parse JSON từ AI response (xử lý markdown code blocks)
 const parseAIResponse = (responseText) => {

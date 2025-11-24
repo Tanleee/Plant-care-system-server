@@ -2,7 +2,10 @@ const mongoose = require('mongoose');
 
 // Current status of device (user control , can not use controlLogModel cause it just save a state of a device at a time)
 const deviceControlSchema = new mongoose.Schema({
-  _id: ObjectId('device_current_status'),
+  _id: {
+    type: String,
+    default: process.env.DEVICE_ID || 'DEVICE_CURRENT_STATUS'
+  },
   pump: {
     type: Boolean,
     require: [true, 'Not enough data']

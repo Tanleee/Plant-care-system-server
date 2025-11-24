@@ -2,7 +2,6 @@ const mongoose = require('mongoose');
 
 // sensor data (real time)
 const sensorDataSchema = new mongoose.Schema({
-  _id: ObjectId,
   temperature: {
     type: Number,
     min: -273,

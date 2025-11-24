@@ -17,6 +17,7 @@ const deviceRouter = require('./routes/deviceRoutes');
 const sensorDataArchieveRouter = require('./routes/sensorDataArchiveRoutes');
 const sensorDataRouter = require('./routes/sensorDataRoutes');
 const userRouter = require('./routes/userRoutes');
+const chatRouter = require('./routes/chatRoutes');
 
 const app = express();
 
