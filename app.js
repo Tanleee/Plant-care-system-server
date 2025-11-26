@@ -58,18 +58,18 @@ app.set('query parser', (str) =>
 app.use(express.urlencoded({ extended: true, limit: '10kb' }));
 
 // Prevent parameter pollution
-app.use(
-  hpp({
-    whitelist: [
-      'duration',
-      'ratingsAverage',
-      'ratingsQuantity',
-      'maxGroupSize',
-      'difficulty',
-      'price'
-    ]
-  })
-);
+// app.use(
+//   hpp({
+//     whitelist: [
+//       'duration',
+//       'ratingsAverage',
+//       'ratingsQuantity',
+//       'maxGroupSize',
+//       'difficulty',
+//       'price'
+//     ]
+//   })
+// );
 
 app.use((req, res, next) => {
   req.requestTime = new Date().toISOString();
