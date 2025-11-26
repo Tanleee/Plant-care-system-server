@@ -14,11 +14,16 @@ router
     controlLogController.createControlLog
   );
 
-router.use(authController.restrictTo('admin'));
-
 router
   .route('/:id')
-  .patch(controlLogController.updateControlLog)
-  .delete(controlLogController.deleteControlLog);
+  .get(controlLogController.getControlLog)
+  .patch(
+    router.use(authController.restrictTo('admin')),
+    controlLogController.updateControlLog
+  )
+  .delete(
+    router.use(authController.restrictTo('admin')),
+    controlLogController.deleteControlLog
+  );
 
 module.exports = router;
