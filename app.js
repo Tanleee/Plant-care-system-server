@@ -7,6 +7,7 @@ const hpp = require('hpp');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
+const compression = require('compression');
 
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
@@ -70,6 +71,8 @@ app.use(express.urlencoded({ extended: true, limit: '10kb' }));
 //     ]
 //   })
 // );
+
+app.use(compression());
 
 app.use((req, res, next) => {
   req.requestTime = new Date().toISOString();
