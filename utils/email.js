@@ -4,10 +4,10 @@ const htmlToText = require('html-to-text');
 
 module.exports = class Email {
   constructor(user, url) {
-    ((this.to = user.email),
+    (this.to = user.email),
       (this.firstName = user.name.split(' ')[0]),
       (this.url = url),
-      (this.from = `Tanlee <${process.env.EMAIL_FROM}>`));
+      (this.from = `Tanlee <${process.env.EMAIL_FROM}>`);
   }
 
   transporter() {
@@ -56,7 +56,7 @@ module.exports = class Email {
   }
 
   async sendWelcome() {
-    await this.send('welcome', 'Welcome to Natour Family!');
+    await this.send('welcome', 'Welcome to SmartPlant!');
   }
 
   async sendPasswordReset() {
