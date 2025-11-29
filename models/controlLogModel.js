@@ -3,7 +3,11 @@ const mongoose = require('mongoose');
 // Only save status of a device at a time.
 const controlLogSchema = new mongoose.Schema(
   {
-    userId: mongoose.Schema.ObjectId,
+    userId: {
+      type: mongoose.Schema.ObjectId,
+      ref: 'User',
+      required: [true, 'The control log must belong a user.']
+    },
     timestamp: {
       type: Date,
       default: Date.now()

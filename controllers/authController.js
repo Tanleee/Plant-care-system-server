@@ -121,7 +121,12 @@ exports.login = catchAsync(async (req, res, next) => {
     .select('+password +active')
     .setOptions({ skipInactive: true });
 
+  if (!user) {
+    return next(new AppError('Email or password was wrong!', 401));
+  }
+
   const correct = await user.correctPassword(password, user.password);
+
   if (!correct) {
     return next(new AppError('Email or password was wrong!', 401));
   }
