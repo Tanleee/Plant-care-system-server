@@ -1,5 +1,71 @@
 [
   {
+    "date": "2024-01-10T00:00:00.000Z",
+    "average": {
+      "temperature": 25.8,
+      "humidity": 63.5,
+      "soilMoisture": 47.2,
+      "light": 810.3
+    },
+    "min": {
+      "temperature": 20.5,
+      "humidity": 53.2,
+      "soilMoisture": 39.5,
+      "light": 100.0
+    },
+    "max": {
+      "temperature": 31.2,
+      "humidity": 76.8,
+      "soilMoisture": 60.5,
+      "light": 1480.5
+    },
+    "recordCount": 288
+  },
+  {
+    "date": "2024-01-11T00:00:00.000Z",
+    "average": {
+      "temperature": 26.2,
+      "humidity": 64.8,
+      "soilMoisture": 46.5,
+      "light": 835.7
+    },
+    "min": {
+      "temperature": 21.8,
+      "humidity": 54.5,
+      "soilMoisture": 38.8,
+      "light": 110.5
+    },
+    "max": {
+      "temperature": 31.8,
+      "humidity": 77.2,
+      "soilMoisture": 59.8,
+      "light": 1520.8
+    },
+    "recordCount": 288
+  },
+  {
+    "date": "2024-01-12T00:00:00.000Z",
+    "average": {
+      "temperature": 26.0,
+      "humidity": 64.0,
+      "soilMoisture": 46.8,
+      "light": 825.2
+    },
+    "min": {
+      "temperature": 21.2,
+      "humidity": 54.0,
+      "soilMoisture": 39.0,
+      "light": 105.2
+    },
+    "max": {
+      "temperature": 31.5,
+      "humidity": 77.0,
+      "soilMoisture": 60.2,
+      "light": 1510.0
+    },
+    "recordCount": 288
+  },
+  {
     "date": "2024-01-13T00:00:00.000Z",
     "average": {
       "temperature": 26.5,
@@ -62,6 +128,116 @@
       "humidity": 75.8,
       "soilMoisture": 62.3,
       "light": 1450.7
+    },
+    "recordCount": 288
+  },
+  {
+    "date": "2024-01-16T00:00:00.000Z",
+    "average": {
+      "temperature": 26.8,
+      "humidity": 66.3,
+      "soilMoisture": 44.5,
+      "light": 890.5
+    },
+    "min": {
+      "temperature": 22.5,
+      "humidity": 56.0,
+      "soilMoisture": 37.2,
+      "light": 115.0
+    },
+    "max": {
+      "temperature": 32.8,
+      "humidity": 79.5,
+      "soilMoisture": 57.8,
+      "light": 1580.2
+    },
+    "recordCount": 288
+  },
+  {
+    "date": "2024-01-17T00:00:00.000Z",
+    "average": {
+      "temperature": 27.5,
+      "humidity": 69.2,
+      "soilMoisture": 41.8,
+      "light": 950.8
+    },
+    "min": {
+      "temperature": 24.0,
+      "humidity": 59.5,
+      "soilMoisture": 34.5,
+      "light": 75.0
+    },
+    "max": {
+      "temperature": 33.5,
+      "humidity": 83.5,
+      "soilMoisture": 54.2,
+      "light": 1650.5
+    },
+    "recordCount": 288
+  },
+  {
+    "date": "2024-01-18T00:00:00.000Z",
+    "average": {
+      "temperature": 26.2,
+      "humidity": 63.8,
+      "soilMoisture": 47.5,
+      "light": 820.3
+    },
+    "min": {
+      "temperature": 21.8,
+      "humidity": 53.8,
+      "soilMoisture": 39.8,
+      "light": 100.5
+    },
+    "max": {
+      "temperature": 31.0,
+      "humidity": 76.2,
+      "soilMoisture": 61.0,
+      "light": 1490.8
+    },
+    "recordCount": 288
+  },
+  {
+    "date": "2024-01-19T00:00:00.000Z",
+    "average": {
+      "temperature": 25.5,
+      "humidity": 61.5,
+      "soilMoisture": 49.2,
+      "light": 765.5
+    },
+    "min": {
+      "temperature": 20.8,
+      "humidity": 51.8,
+      "soilMoisture": 41.0,
+      "light": 90.0
+    },
+    "max": {
+      "temperature": 30.0,
+      "humidity": 74.5,
+      "soilMoisture": 63.5,
+      "light": 1420.0
+    },
+    "recordCount": 288
+  },
+  {
+    "date": "2024-01-20T00:00:00.000Z",
+    "average": {
+      "temperature": 27.0,
+      "humidity": 67.8,
+      "soilMoisture": 43.2,
+      "light": 910.0
+    },
+    "min": {
+      "temperature": 23.2,
+      "humidity": 57.5,
+      "soilMoisture": 35.8,
+      "light": 85.5
+    },
+    "max": {
+      "temperature": 32.5,
+      "humidity": 81.2,
+      "soilMoisture": 56.0,
+      "light": 1600.5
     },
     "recordCount": 288
   }
