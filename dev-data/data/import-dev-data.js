@@ -9,6 +9,7 @@ const Device = require('./../../models/deviceModel');
 const DeviceControl = require('./../../models/deviceControlModel');
 const SensorData = require('./../../models/sensorDataModel');
 const SensorDataArchieve = require('./../../models/sensorDataArchiveModel');
+const Notification = require('./../../models/notificationModel');
 
 const DB = process.env.DATABASE.replace(
   '<PASSWORD>',
@@ -36,6 +37,9 @@ const sensorDataArchieve = JSON.parse(
 const user = JSON.parse(
   fs.readFileSync(`${__dirname}/users.json`, { encoding: 'utf-8' })
 );
+const notifications = JSON.parse(
+  fs.readFileSync(`${__dirname}/notifications.json`, { encoding: 'utf-8' })
+);
 
 const importData = async () => {
   try {
@@ -47,6 +51,7 @@ const importData = async () => {
       validateBeforeSave: false
     });
     await User.create(user, { validateBeforeSave: false });
+    await Notification.create(notifications, { validateBeforeSave: false });
 
     console.log('Data sucessfully loaded!');
   } catch (err) {
@@ -64,6 +69,7 @@ const deleteData = async () => {
     await DeviceControl.deleteMany({});
     await SensorData.deleteMany({});
     await SensorDataArchieve.deleteMany({});
+    await Notification.deleteMany({});
 
     console.log('Data sucessfully deleted!');
   } catch (err) {

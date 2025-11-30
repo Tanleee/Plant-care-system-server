@@ -1,0 +1,61 @@
+[
+  {
+    "id": 1,
+    "type": "warning",
+    "category": "sensor",
+    "title": "Cảnh báo nhiệt độ cao",
+    "message": "Nhiệt độ hiện tại 36.5°C vượt ngưỡng an toàn",
+    "isRead": false,
+    "createdAt": "2024-01-15T14:30:00.000Z",
+    "data": {
+      "sensorValue": 36.5,
+      "threshold": 35
+    }
+  },
+  {
+    "id": 2,
+    "type": "warning",
+    "category": "sensor",
+    "title": "Cần tưới nước",
+    "message": "Độ ẩm đất chỉ còn 38%. Cây cần được tưới",
+    "isRead": false,
+    "createdAt": "2024-01-15T13:15:00.000Z",
+    "data": {
+      "sensorValue": 38,
+      "threshold": 40
+    }
+  },
+  {
+    "id": 3,
+    "type": "success",
+    "category": "device",
+    "title": "Máy bơm hoạt động",
+    "message": "Máy bơm nước đã được bật tự động",
+    "isRead": true,
+    "createdAt": "2024-01-15T12:00:00.000Z",
+    "data": {
+      "device": "pump"
+    }
+  },
+  {
+    "id": 4,
+    "type": "info",
+    "category": "schedule",
+    "title": "Lịch trình thực thi",
+    "message": "Đèn chiếu sáng đã bật theo lịch trình",
+    "isRead": true,
+    "createdAt": "2024-01-15T06:00:00.000Z",
+    "data": {
+      "device": "light"
+    }
+  },
+  {
+    "id": 5,
+    "type": "error",
+    "category": "system",
+    "title": "Mất kết nối thiết bị",
+    "message": "Không thể kết nối với cảm biến. Vui lòng kiểm tra",
+    "isRead": false,
+    "createdAt": "2024-01-15T10:30:00.000Z"
+  }
+]

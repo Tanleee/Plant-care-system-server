@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const deviceControlSchema = new mongoose.Schema({
   _id: {
     type: String,
-    default: process.env.DEVICE_ID || 'DEVICE_CURRENT_STATUS'
+    default: process.env.DEVICE_CURRENT_STATUS_ID || 'DEVICE_CURRENT_STATUS'
   },
   pump: {
     type: Boolean,
