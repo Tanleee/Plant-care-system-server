@@ -27,61 +27,90 @@ const app = express();
 app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'views'));
 
+// Serving static files
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(
-  cors({
-    origin: 'http://localhost:5173',
-    credentials: true
-  })
-);
+
+// ✅ CORS Configuration - CHO PHÉP NHIỀU ORIGINS
+const allowedOrigins = [
+  'http://localhost:5173',
+  'http://127.0.0.1:5173',
+  process.env.CLIENT_URL // URL của frontend sau khi deploy
+];
+
+const corsOptions = {
+  origin: function (origin, callback) {
+    // Cho phép requests không có origin (mobile apps, Postman, ESP32)
+    if (!origin) return callback(null, true);
+
+    if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true,
+  optionsSuccessStatus: 200
+};
+
+app.use(cors(corsOptions));
+
+// Set security HTTP headers
+app.use(helmet());
 
 // 1) Global middleware
-console.log(process.env.NODE_ENV);
+console.log('Environment:', process.env.NODE_ENV);
 
 if (process.env.NODE_ENV === 'development') {
-  app.use(morgan('short'));
+  app.use(morgan('dev'));
+} else {
+  app.use(morgan('combined'));
 }
 
 // Limiting request from same API
 const limiter = rateLimit({
   windowMs: 60 * 60 * 1000,
   limit: 1000,
-  message: 'Too many request from this IP. Please try again in an hour.'
+  message: 'Too many requests from this IP. Please try again in an hour.',
+  standardHeaders: true,
+  legacyHeaders: false
 });
 app.use('/api', limiter);
 
+// Body parser
 app.use(express.json({ limit: '10kb' }));
 app.use(cookieParser());
 
-// Dùng qs để xử lý các query lồng nhau có trong route
+// Query parser
 app.set('query parser', (str) =>
   qs.parse(str, { depth: 5, parameterLimit: 1000 })
 );
 
 app.use(express.urlencoded({ extended: true, limit: '10kb' }));
 
-// Prevent parameter pollution
-// app.use(
-//   hpp({
-//     whitelist: [
-//       'duration',
-//       'ratingsAverage',
-//       'ratingsQuantity',
-//       'maxGroupSize',
-//       'difficulty',
-//       'price'
-//     ]
-//   })
-// );
+// Data sanitization and prevent parameter pollution
+app.use(hpp());
 
+// Compression middleware
 app.use(compression());
 
+// Request time middleware
 app.use((req, res, next) => {
   req.requestTime = new Date().toISOString();
   next();
 });
 
+// Health check endpoint (cho monitoring và keep-alive)
+app.get('/health', (req, res) => {
+  res.status(200).json({
+    status: 'success',
+    message: 'Server is running',
+    timestamp: new Date().toISOString(),
+    environment: process.env.NODE_ENV
+  });
+});
+
 // 3) Routes
+app.use('/api/v1/iot', iotRouter); // IoT routes trước để không bị authentication
 app.use('/api/v1/chat', chatRouter);
 app.use('/api/v1/control-log', controlLogRouter);
 app.use('/api/v1/device-control', deviceControlRouter);
@@ -91,12 +120,12 @@ app.use('/api/v1/sensor-data', sensorDataRouter);
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/notifications', notificationRouter);
 
-app.use('/api/v1/iot', iotRouter);
-
+// Handle undefined routes
 app.all(/./, (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server.`, 404));
 });
 
+// Global error handling middleware
 app.use(globalErrorHandler);
 
 module.exports = app;

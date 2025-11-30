@@ -4,7 +4,6 @@ dotenv.config({ path: './config.env' });
 
 process.on('uncaughtException', (err) => {
   console.log('UNHANDLER EXCEPTION 💥 Shutting down ...');
-  // console.log(err.name, err.message);
   console.log(err);
   process.exit(1);
 });
@@ -19,8 +18,12 @@ const DB = process.env.DATABASE.replace(
 mongoose.connect(DB).then((con) => console.log('DB connection successful!'));
 
 const port = process.env.PORT || 3000;
-const server = app.listen(port, '127.0.0.1', () => {
-  console.log('Listening on port %d ...', port);
+
+// ⚠️ THAY ĐỔI QUAN TRỌNG: Bỏ '127.0.0.1' để chạy trên Render
+// Trước: app.listen(port, '127.0.0.1', ...)
+// Sau:
+const server = app.listen(port, () => {
+  console.log(`Listening on port ${port} in ${process.env.NODE_ENV} mode...`);
 });
 
 process.on('unhandledRejection', (err) => {
@@ -28,5 +31,13 @@ process.on('unhandledRejection', (err) => {
   console.log(err.name, err.message);
   server.close(() => {
     process.exit(1);
+  });
+});
+
+// Graceful shutdown cho Render
+process.on('SIGTERM', () => {
+  console.log('👋 SIGTERM RECEIVED. Shutting down gracefully');
+  server.close(() => {
+    console.log('💥 Process terminated!');
   });
 });
