@@ -123,7 +123,10 @@ app.use('/api/v1/notifications', notificationRouter);
 // Handle undefined routes
 // Handle undefined routes
 app.all('*', (req, res, next) => {
-  next(new AppError(`Can't find ${req.originalUrl} on this server.`, 404));
+  // next(new AppError(`Can't find ${req.originalUrl} on this server.`, 404));
+  res.status(404).json({
+    message: 'Page not found'
+  });
 });
 
 // Global error handling middleware
