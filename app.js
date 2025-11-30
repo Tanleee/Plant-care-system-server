@@ -121,7 +121,8 @@ app.use('/api/v1/users', userRouter);
 app.use('/api/v1/notifications', notificationRouter);
 
 // Handle undefined routes
-app.all(/./, (req, res, next) => {
+// Handle undefined routes
+app.all('*', (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server.`, 404));
 });
 
