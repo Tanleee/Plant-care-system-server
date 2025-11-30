@@ -5,6 +5,7 @@ const { OAuth2Client } = require('google-auth-library');
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
 const User = require('./../models/userModel');
+const Device = require('./../models/deviceModel');
 const catchAsync = require('./../utils/catchAsync');
 const AppError = require('./../utils/appError');
 const Email = require('./../utils/email');
@@ -372,4 +373,39 @@ exports.updatePassword = catchAsync(async function (req, res, next) {
   await user.save();
 
   createSendToken(user, 200, res);
+});
+
+exports.validateApiKey = catchAsync(async (req, res, next) => {
+  // Lấy API key từ header
+  const apiKey = req.headers['x-api-key'];
+
+  if (!apiKey) {
+    return next(
+      new AppError('API key is required. Please provide X-API-Key header', 401)
+    );
+  }
+
+  // Tìm device với API key này
+  const device = await Device.findOne({ apiKey }).select('+apiKey');
+
+  if (!device) {
+    return next(new AppError('Invalid API key', 403));
+  }
+
+  if (!device.isActive) {
+    return next(
+      new AppError(
+        'This device has been deactivated. Please contact admin',
+        403
+      )
+    );
+  }
+
+  // Update last active time
+  device.lastActive = Date.now();
+  await device.save({ validateBeforeSave: false });
+
+  // Gắn device vào request để sử dụng sau này
+  req.device = device;
+  next();
 });

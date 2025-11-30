@@ -20,6 +20,7 @@ const sensorDataRouter = require('./routes/sensorDataRoutes');
 const userRouter = require('./routes/userRoutes');
 const chatRouter = require('./routes/chatRoutes');
 const notificationRouter = require('./routes/notificationRoutes');
+const iotRouter = require('./routes/iotRoutes');
 
 const app = express();
 
@@ -82,13 +83,15 @@ app.use((req, res, next) => {
 
 // 3) Routes
 app.use('/api/v1/chat', chatRouter);
-app.use('/api/v1/controlLog', controlLogRouter);
-app.use('/api/v1/deviceControl', deviceControlRouter);
+app.use('/api/v1/control-log', controlLogRouter);
+app.use('/api/v1/device-control', deviceControlRouter);
 app.use('/api/v1/device', deviceRouter);
-app.use('/api/v1/sensorDataArchieve', sensorDataArchieveRouter);
-app.use('/api/v1/sensorData', sensorDataRouter);
+app.use('/api/v1/sensor-data-archieve', sensorDataArchieveRouter);
+app.use('/api/v1/sensor-data', sensorDataRouter);
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/notifications', notificationRouter);
+
+app.use('/api/v1/iot', iotRouter);
 
 app.all(/./, (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server.`, 404));

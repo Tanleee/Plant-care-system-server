@@ -11,12 +11,15 @@ router
   .get(deviceController.getAllDevice)
   .post(authController.restrictTo('admin'), deviceController.createDevice);
 
-router.use(authController.restrictTo('admin'));
-
 router
   .route('/:id')
   .get(deviceController.getDevice)
-  .patch(deviceController.updateDevice)
-  .delete(deviceController.deleteDevice);
+  .patch(authController.restrictTo('admin'), deviceController.updateDevice)
+  .delete(authController.restrictTo('admin'), deviceController.deleteDevice);
+
+router.use(authController.restrictTo('admin'));
+
+router.patch('/:id/regenerate-key', deviceController.regenerateApiKey);
+router.patch('/:id/toggle-status', deviceController.toggleDeviceStatus);
 
 module.exports = router;
