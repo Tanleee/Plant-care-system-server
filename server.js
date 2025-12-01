@@ -19,9 +19,6 @@ mongoose.connect(DB).then((con) => console.log('DB connection successful!'));
 
 const port = process.env.PORT || 3000;
 
-// ⚠️ THAY ĐỔI QUAN TRỌNG: Bỏ '127.0.0.1' để chạy trên Render
-// Trước: app.listen(port, '127.0.0.1', ...)
-// Sau:
 const server = app.listen(port, () => {
   console.log(`Listening on port ${port} in ${process.env.NODE_ENV} mode...`);
 });
