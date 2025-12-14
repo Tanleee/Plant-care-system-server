@@ -34,28 +34,52 @@ app.use(express.static(path.join(__dirname, 'public')));
 const allowedOrigins = [
   'http://localhost:5173',
   'http://127.0.0.1:5173',
-  process.env.CLIENT_URL // URL của frontend sau khi deploy
+  process.env.CLIENT_URL
 ];
+
+// const corsOptions = {
+//   origin: function (origin, callback) {
+//     // Cho phép requests không có origin (mobile apps, Postman, ESP32)
+//     if (!origin) return callback(null, true);
+
+//     if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
+//       callback(null, true);
+//     } else {
+//       callback(new Error('Not allowed by CORS'));
+//     }
+//   },
+//   credentials: true,
+//   optionsSuccessStatus: 200
+// };
+
+// app.use(cors(corsOptions));
 
 const corsOptions = {
   origin: function (origin, callback) {
-    // Cho phép requests không có origin (mobile apps, Postman, ESP32)
+    // Cho phép requests không có origin (ESP32, Postman)
     if (!origin) return callback(null, true);
 
-    if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
+    if (allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
       callback(new Error('Not allowed by CORS'));
     }
   },
   credentials: true,
+  methods: ['GET', 'POST', 'PATCH', 'DELETE', 'PUT', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'Cookie'],
   optionsSuccessStatus: 200
 };
 
 app.use(cors(corsOptions));
+app.options('*', cors(corsOptions)); // Thêm dòng này
 
 // Set security HTTP headers
-app.use(helmet());
+app.use(
+  helmet({
+    crossOriginResourcePolicy: { policy: 'cross-origin' }
+  })
+);
 
 // 1) Global middleware
 console.log('Environment:', process.env.NODE_ENV);
