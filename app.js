@@ -55,7 +55,7 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
-app.options(/./, cors(corsOptions)); // Thêm dòng này
+app.options(/./, cors(corsOptions));
 
 // Set security HTTP headers
 app.use(

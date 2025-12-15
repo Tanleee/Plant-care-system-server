@@ -208,14 +208,11 @@ exports.recoverAccount = catchAsync(async (req, res, next) => {
 // };
 
 exports.logout = (req, res, next) => {
-  const cookieOptions = {
+  res.clearCookie('jwt', {
     httpOnly: true,
-    expires: new Date(Date.now() + 10 * 1000),
     sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
     secure: process.env.NODE_ENV === 'production'
-  };
-
-  res.cookie('jwt', 'loggedout', cookieOptions);
+  });
 
   res.status(200).json({
     status: 'success'
