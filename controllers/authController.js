@@ -23,6 +23,35 @@ const signToken = (id) => {
   );
 };
 
+// const createSendToken = (user, statusCode, res) => {
+//   const token = signToken(user._id);
+
+//   const cookieOptions = {
+//     expires: new Date(
+//       Date.now() + process.env.COOKIE_EXPIRES_IN * 24 * 3600 * 1000
+//     ),
+//     httpOnly: true,
+//     sameSite: 'none', // QUAN TRỌNG: cho phép cross-origin
+//     secure: true // BẮT BUỘC khi sameSite='none'
+//   };
+
+//   // Nếu đang ở development và không dùng HTTPS
+//   if (process.env.NODE_ENV !== 'production') {
+//     cookieOptions.sameSite = 'lax'; // hoặc 'strict'
+//     cookieOptions.secure = false;
+//   }
+
+//   res.cookie('jwt', token, cookieOptions);
+
+//   user.password = undefined;
+
+//   res.status(statusCode).json({
+//     status: 'success',
+//     token,
+//     data: { user }
+//   });
+// };
+
 const createSendToken = (user, statusCode, res) => {
   const token = signToken(user._id);
 
@@ -31,15 +60,10 @@ const createSendToken = (user, statusCode, res) => {
       Date.now() + process.env.COOKIE_EXPIRES_IN * 24 * 3600 * 1000
     ),
     httpOnly: true,
-    sameSite: 'none', // QUAN TRỌNG: cho phép cross-origin
-    secure: true // BẮT BUỘC khi sameSite='none'
+    // ✅ FIX: Đặt giá trị dựa trên môi trường ngay từ đầu
+    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+    secure: process.env.NODE_ENV === 'production'
   };
-
-  // Nếu đang ở development và không dùng HTTPS
-  if (process.env.NODE_ENV !== 'production') {
-    cookieOptions.sameSite = 'lax'; // hoặc 'strict'
-    cookieOptions.secure = false;
-  }
 
   res.cookie('jwt', token, cookieOptions);
 
@@ -166,12 +190,17 @@ exports.recoverAccount = catchAsync(async (req, res, next) => {
 // exports.logout = (req, res, next) => {
 //   const cookieOptions = {
 //     httpOnly: true,
-//     expires: new Date(Date.now() + 10 * 1000) //expires in 10s cause it just a fake cookie to announce front know
+//     expires: new Date(Date.now() + 10 * 1000),
+//     sameSite: 'none',
+//     secure: true
 //   };
 
-//   if (process.env.NODE_ENV === 'production') cookieOptions.secure = true;
+//   if (process.env.NODE_ENV !== 'production') {
+//     cookieOptions.sameSite = 'lax';
+//     cookieOptions.secure = false;
+//   }
 
-//   res.cookie('jwt', 'loggedout', cookieOptions); //fake cookie for jwt
+//   res.cookie('jwt', 'loggedout', cookieOptions);
 
 //   res.status(200).json({
 //     status: 'success'
@@ -182,14 +211,9 @@ exports.logout = (req, res, next) => {
   const cookieOptions = {
     httpOnly: true,
     expires: new Date(Date.now() + 10 * 1000),
-    sameSite: 'none',
-    secure: true
+    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+    secure: process.env.NODE_ENV === 'production'
   };
-
-  if (process.env.NODE_ENV !== 'production') {
-    cookieOptions.sameSite = 'lax';
-    cookieOptions.secure = false;
-  }
 
   res.cookie('jwt', 'loggedout', cookieOptions);
 

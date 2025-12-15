@@ -37,23 +37,6 @@ const allowedOrigins = [
   process.env.CLIENT_URL
 ];
 
-// const corsOptions = {
-//   origin: function (origin, callback) {
-//     // Cho phép requests không có origin (mobile apps, Postman, ESP32)
-//     if (!origin) return callback(null, true);
-
-//     if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
-//       callback(null, true);
-//     } else {
-//       callback(new Error('Not allowed by CORS'));
-//     }
-//   },
-//   credentials: true,
-//   optionsSuccessStatus: 200
-// };
-
-// app.use(cors(corsOptions));
-
 const corsOptions = {
   origin: function (origin, callback) {
     // Cho phép requests không có origin (ESP32, Postman)
