@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.post('/signup', authController.signup);
 router.post('/login', authController.login);
-router.get('/logout', authController.logout);
+router.post('/logout', authController.logout);
 router.post('/google-auth', authController.googleAuth);
 
 router.patch('/recover-account', authController.recoverAccount);
