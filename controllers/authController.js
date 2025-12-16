@@ -103,7 +103,7 @@ exports.googleAuth = async (req, res, next) => {
     // Tìm hoặc tạo user
     let user = await User.findOne({ email })
       .select('+active')
-      .setOptions({ skipInactive: true });
+      .setOptions({ skipInactive: false });
 
     if (!user) {
       if (!isSignUp) {
@@ -122,8 +122,14 @@ exports.googleAuth = async (req, res, next) => {
         passwordConfirm: undefined,
         isGoogleAuth: true
       });
-    } else if (!user.active) {
-      return next(new AppError(email, 403));
+      // If have user and signup
+    } else if (isSignUp) {
+      if (!user.active) {
+        return next(new AppError(email, 403));
+      }
+      return next(
+        new AppError('Tài khoản đã tồn tại. Vui lòng đăng nhập.', 409)
+      );
     }
 
     // Tạo JWT token
@@ -187,26 +193,6 @@ exports.recoverAccount = catchAsync(async (req, res, next) => {
     message: 'Tài khoản đã được khôi phục'
   });
 });
-
-// exports.logout = (req, res, next) => {
-//   const cookieOptions = {
-//     httpOnly: true,
-//     expires: new Date(Date.now() + 10 * 1000),
-//     sameSite: 'none',
-//     secure: true
-//   };
-
-//   if (process.env.NODE_ENV !== 'production') {
-//     cookieOptions.sameSite = 'lax';
-//     cookieOptions.secure = false;
-//   }
-
-//   res.cookie('jwt', 'loggedout', cookieOptions);
-
-//   res.status(200).json({
-//     status: 'success'
-//   });
-// };
 
 exports.logout = (req, res, next) => {
   res.clearCookie('jwt', {
