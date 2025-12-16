@@ -62,7 +62,8 @@ const createSendToken = (user, statusCode, res) => {
     httpOnly: true,
     // ✅ FIX: Đặt giá trị dựa trên môi trường ngay từ đầu
     sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
-    secure: process.env.NODE_ENV === 'production'
+    secure: process.env.NODE_ENV === 'production',
+    path: '/'
   };
 
   res.cookie('jwt', token, cookieOptions);
@@ -211,7 +212,8 @@ exports.logout = (req, res, next) => {
   res.clearCookie('jwt', {
     httpOnly: true,
     sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
-    secure: process.env.NODE_ENV === 'production'
+    secure: process.env.NODE_ENV === 'production',
+    path: '/'
   });
 
   res.status(200).json({
