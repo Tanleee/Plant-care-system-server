@@ -103,7 +103,7 @@ exports.googleAuth = async (req, res, next) => {
     // Tìm hoặc tạo user
     let user = await User.findOne({ email })
       .select('+active')
-      .setOptions({ skipInactive: false });
+      .setOptions({ skipInactive: true });
 
     if (!user) {
       if (!isSignUp) {

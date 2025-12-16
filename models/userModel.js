@@ -96,7 +96,7 @@ userSchema.pre('save', async function (next) {
 });
 
 userSchema.pre(/^find/, async function (next) {
-  if (this.getOptions().skipInactive) {
+  if (!this.getOptions().skipInactive) {
     return next();
   }
 
