@@ -209,12 +209,22 @@ exports.recoverAccount = catchAsync(async (req, res, next) => {
 // };
 
 exports.logout = (req, res, next) => {
-  res.clearCookie('jwt', {
+  console.log('🔓 LOGOUT REQUEST');
+  console.log('📦 Cookies before:', req.cookies);
+  console.log('🌍 NODE_ENV:', process.env.NODE_ENV);
+
+  const cookieOptions = {
     httpOnly: true,
     sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
     secure: process.env.NODE_ENV === 'production',
     path: '/'
-  });
+  };
+
+  console.log('🍪 Cookie options:', cookieOptions);
+
+  res.clearCookie('jwt', cookieOptions);
+
+  console.log('✅ Cookie cleared');
 
   res.status(200).json({
     status: 'success'
