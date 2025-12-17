@@ -103,7 +103,7 @@ exports.googleAuth = async (req, res, next) => {
     // Tìm hoặc tạo user
     let user = await User.findOne({ email })
       .select('+active')
-      .setOptions({ skipInactive: true });
+      .setOptions({ skipInactive: false });
 
     if (!user) {
       if (!isSignUp) {
@@ -179,7 +179,9 @@ exports.login = catchAsync(async (req, res, next) => {
 exports.recoverAccount = catchAsync(async (req, res, next) => {
   const { email } = req.body;
 
-  const user = await User.findOne({ email }).setOptions({ skipInactive: true });
+  const user = await User.findOne({ email }).setOptions({
+    skipInactive: false
+  });
 
   if (!user) {
     return next(new AppError('Không tìm thấy tài khoản', 404));
