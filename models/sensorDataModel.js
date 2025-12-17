@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 
-// sensor data (real time)
 const sensorDataSchema = new mongoose.Schema({
   temperature: {
     type: Number,

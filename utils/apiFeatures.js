@@ -1,7 +1,7 @@
 class APIFeature {
   // Model.find, req.query
   constructor(query, queryString) {
-    ((this.query = query), (this.queryString = queryString));
+    (this.query = query), (this.queryString = queryString);
   }
   filter() {
     const queryObj = { ...this.queryString };
@@ -25,7 +25,7 @@ class APIFeature {
       const sortBy = this.queryString.sort.split(',').join(' ');
       this.query = this.query.sort(sortBy);
     } else {
-      this.query = this.query.sort('-createAt');
+      this.query = this.query.sort('-timestamp');
     }
     return this;
   }
