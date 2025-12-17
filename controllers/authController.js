@@ -3,6 +3,7 @@ const { promisify } = require('util');
 const crypto = require('crypto');
 const { OAuth2Client } = require('google-auth-library');
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+const axios = require('axios');
 
 const User = require('./../models/userModel');
 const Device = require('./../models/deviceModel');
@@ -140,6 +141,115 @@ exports.googleAuth = async (req, res, next) => {
     next(err);
   }
 };
+
+exports.facebookAuth = catchAsync(async (req, res, next) => {
+  try {
+    const { accessToken, isSignUp } = req.body;
+
+    if (!accessToken) {
+      return next(new AppError('Access token is required', 400));
+    }
+
+    // Verify Facebook access token
+    const appAccessToken = `${process.env.FACEBOOK_APP_ID}|${process.env.FACEBOOK_APP_SECRET}`;
+
+    // Debug token để verify
+    const debugResponse = await axios.get(
+      `https://graph.facebook.com/debug_token`,
+      {
+        params: {
+          input_token: accessToken,
+          access_token: appAccessToken
+        }
+      }
+    );
+
+    const { data: debugData } = debugResponse.data;
+
+    // Kiểm tra token có hợp lệ không
+    if (!debugData.is_valid) {
+      return next(new AppError('Invalid Facebook token', 401));
+    }
+
+    // Kiểm tra app_id có khớp không
+    if (debugData.app_id !== process.env.FACEBOOK_APP_ID) {
+      return next(new AppError('Token does not belong to this app', 401));
+    }
+
+    // Lấy thông tin user từ Facebook
+    const userResponse = await axios.get(`https://graph.facebook.com/me`, {
+      params: {
+        fields: 'id,name,email,picture.type(large)',
+        access_token: accessToken
+      }
+    });
+
+    const { id: facebookId, name, email, picture } = userResponse.data;
+
+    // Kiểm tra email có tồn tại không
+    if (!email) {
+      return next(
+        new AppError('Email permission is required from Facebook', 400)
+      );
+    }
+
+    // Tìm hoặc tạo user
+    let user = await User.findOne({ email })
+      .select('+active')
+      .setOptions({ skipInactive: false });
+
+    if (!user) {
+      if (!isSignUp) {
+        return res.status(401).json({
+          status: 'fail',
+          message: 'Tài khoản không tồn tại. Vui lòng đăng ký.'
+        });
+      }
+
+      user = await User.create({
+        name,
+        email,
+        facebookId,
+        photo: picture?.data?.url || undefined,
+        password: crypto.randomBytes(32).toString('hex'),
+        passwordConfirm: undefined,
+        isFacebookAuth: true
+      });
+    } else {
+      if (!user.active) {
+        return next(new AppError(email, 403));
+      }
+
+      if (isSignUp) {
+        return next(
+          new AppError('Tài khoản đã tồn tại. Vui lòng đăng nhập.', 409)
+        );
+      }
+
+      // Update Facebook ID nếu chưa có
+      if (!user.facebookId) {
+        user.facebookId = facebookId;
+        user.isFacebookAuth = true;
+        await user.save({ validateBeforeSave: false });
+      }
+    }
+
+    // Tạo JWT token
+    createSendToken(user, 200, res);
+  } catch (err) {
+    if (err.response?.data) {
+      return next(
+        new AppError(
+          `Facebook authentication failed: ${
+            err.response.data.error?.message || 'Unknown error'
+          }`,
+          401
+        )
+      );
+    }
+    next(err);
+  }
+});
 
 exports.login = catchAsync(async (req, res, next) => {
   const { email, password, ...rest } = req.body;
@@ -308,6 +418,12 @@ exports.forgotPassword = catchAsync(async function (req, res, next) {
     return next(
       new AppError(
         "It looks like your account is registered using your Google account. To log in, please use the 'Sign in with Google' button."
+      )
+    );
+  } else if (user.isFacebookAuth) {
+    return next(
+      new AppError(
+        "It looks like your account is registered using your Facebook account. To log in, please use the 'Sign in with Facebook' button."
       )
     );
   }

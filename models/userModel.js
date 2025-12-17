@@ -32,6 +32,16 @@ const userSchema = new mongoose.Schema(
       default: false
     },
 
+    facebookId: {
+      type: String,
+      unique: true,
+      sparse: true // cho phép nhiều giá trị null
+    },
+    isFacebookAuth: {
+      type: Boolean,
+      default: false
+    },
+
     password: {
       type: String,
       required: function () {

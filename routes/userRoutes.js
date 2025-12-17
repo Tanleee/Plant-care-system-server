@@ -8,6 +8,7 @@ router.post('/signup', authController.signup);
 router.post('/login', authController.login);
 router.post('/logout', authController.logout);
 router.post('/google-auth', authController.googleAuth);
+router.post('/facebook-auth', authController.facebookAuth);
 
 router.patch('/recover-account', authController.recoverAccount);
 router.post('/forgotPassword', authController.forgotPassword);
