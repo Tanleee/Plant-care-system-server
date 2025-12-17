@@ -122,14 +122,16 @@ exports.googleAuth = async (req, res, next) => {
         passwordConfirm: undefined,
         isGoogleAuth: true
       });
-      // If have user and signup
-    } else if (isSignUp) {
+    } else {
       if (!user.active) {
         return next(new AppError(email, 403));
       }
-      return next(
-        new AppError('Tài khoản đã tồn tại. Vui lòng đăng nhập.', 409)
-      );
+
+      if (isSignUp) {
+        return next(
+          new AppError('Tài khoản đã tồn tại. Vui lòng đăng nhập.', 409)
+        );
+      }
     }
 
     // Tạo JWT token
