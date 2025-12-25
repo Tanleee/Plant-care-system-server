@@ -521,17 +521,18 @@ exports.validateApiKey = catchAsync(async (req, res, next) => {
     return next(new AppError('Invalid API key', 403));
   }
 
-  if (!device.isActive) {
+  // ✅ Sửa: Kiểm tra isOnline thay vì isActive
+  if (!device.isOnline) {
     return next(
       new AppError(
-        'This device has been deactivated. Please contact admin',
+        'This device is currently offline. Please check device connection',
         403
       )
     );
   }
 
-  // Update last active time
-  device.lastActive = Date.now();
+  // ✅ Sửa: Update lastSeen thay vì lastActive
+  device.lastSeen = Date.now();
   await device.save({ validateBeforeSave: false });
 
   // Gắn device vào request để sử dụng sau này
