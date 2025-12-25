@@ -1,15 +1,7 @@
 [
   {
-    "name": "Garden Sensor Unit",
-    "location": {
-      "description": "Backyard garden",
-      "type": "Point",
-      "coordinates": [108.2025, 16.0547]
-    },
+    "name": "Clock",
     "isOnline": true,
-    "isActive": true,
-    "lastSeen": "2024-01-14T22:15:00.000Z",
-    "createdAt": "2024-01-05T14:30:00.000Z",
     "userId": "507f1f77bcf86cd799439011"
   }
 ]

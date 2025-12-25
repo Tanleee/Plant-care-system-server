@@ -1,0 +1,62 @@
+[
+  {
+    "hour": 6,
+    "min": 30,
+    "enable": true,
+    "repeat": [false, true, true, true, true, true, false]
+  },
+  {
+    "hour": 7,
+    "min": 0,
+    "enable": true,
+    "repeat": [true, false, false, false, false, false, true]
+  },
+  {
+    "hour": 8,
+    "min": 15,
+    "enable": false,
+    "repeat": [false, false, false, false, false, false, false]
+  },
+  {
+    "hour": 12,
+    "min": 0,
+    "enable": true,
+    "repeat": [true, true, true, true, true, true, true]
+  },
+  {
+    "hour": 22,
+    "min": 0,
+    "enable": true,
+    "repeat": [false, false, false, false, false, false, false]
+  },
+  {
+    "hour": 9,
+    "min": 30,
+    "enable": true,
+    "repeat": [false, true, false, true, false, true, false]
+  },
+  {
+    "hour": 14,
+    "min": 45,
+    "enable": false,
+    "repeat": [true, false, true, false, true, false, true]
+  },
+  {
+    "hour": 18,
+    "min": 0,
+    "enable": true,
+    "repeat": [false, false, false, false, false, true, true]
+  },
+  {
+    "hour": 5,
+    "min": 45,
+    "enable": true,
+    "repeat": [false, true, true, true, true, true, false]
+  },
+  {
+    "hour": 23,
+    "min": 30,
+    "enable": false,
+    "repeat": [true, true, true, true, true, true, true]
+  }
+]

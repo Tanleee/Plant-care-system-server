@@ -7,12 +7,6 @@ const deviceSchema = new mongoose.Schema({
     required: [true, 'Device must have a name'],
     trim: true
   },
-  deviceId: {
-    type: String,
-    required: [true, 'Device must have an ID'],
-    unique: true,
-    trim: true
-  },
   apiKey: {
     type: String,
     required: true,
@@ -23,19 +17,6 @@ const deviceSchema = new mongoose.Schema({
     type: Boolean,
     default: true
   },
-  // isActive: {
-  //   type: Boolean,
-  //   default: true
-  // },
-  // location: {
-  //   type: {
-  //     type: String,
-  //     default: 'Point',
-  //     enum: ['Point']
-  //   },
-  //   coordinates: [Number],
-  //   description: String
-  // },
   lastSeen: {
     type: Date,
     default: Date.now
