@@ -23,19 +23,19 @@ const deviceSchema = new mongoose.Schema({
     type: Boolean,
     default: true
   },
-  isActive: {
-    type: Boolean,
-    default: true
-  },
-  location: {
-    type: {
-      type: String,
-      default: 'Point',
-      enum: ['Point']
-    },
-    coordinates: [Number],
-    description: String
-  },
+  // isActive: {
+  //   type: Boolean,
+  //   default: true
+  // },
+  // location: {
+  //   type: {
+  //     type: String,
+  //     default: 'Point',
+  //     enum: ['Point']
+  //   },
+  //   coordinates: [Number],
+  //   description: String
+  // },
   lastSeen: {
     type: Date,
     default: Date.now
@@ -47,7 +47,6 @@ const deviceSchema = new mongoose.Schema({
   userId: {
     type: mongoose.Schema.ObjectId,
     ref: 'User'
-    // required: [true, 'Device must belong to a user']
   }
 });
 

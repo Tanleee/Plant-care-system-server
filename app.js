@@ -117,15 +117,15 @@ app.get('/health', (req, res) => {
 });
 
 // 3) Routes
-app.use('/api/v1/iot', iotRouter); // IoT routes trước để không bị authentication
-app.use('/api/v1/chat', chatRouter);
-app.use('/api/v1/control-log', controlLogRouter);
-app.use('/api/v1/device-control', deviceControlRouter);
+app.use('/api/v1/iot', iotRouter);
+// app.use('/api/v1/chat', chatRouter);
+// app.use('/api/v1/control-log', controlLogRouter);
+// app.use('/api/v1/device-control', deviceControlRouter);
 app.use('/api/v1/device', deviceRouter);
-app.use('/api/v1/sensor-data-archieve', sensorDataArchieveRouter);
-app.use('/api/v1/sensor-data', sensorDataRouter);
+// app.use('/api/v1/sensor-data-archieve', sensorDataArchieveRouter);
+// app.use('/api/v1/sensor-data', sensorDataRouter);
 app.use('/api/v1/users', userRouter);
-app.use('/api/v1/notifications', notificationRouter);
+// app.use('/api/v1/notifications', notificationRouter);
 
 // Handle undefined routes
 app.all(/./, (req, res, next) => {
